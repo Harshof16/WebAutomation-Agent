@@ -3,7 +3,7 @@
 This project demonstrates a **tiny browser automation agent** built using the [OpenAI Agent SDK](https://github.com/openai) and [Playwright](https://playwright.dev/).  
 The agent can **open a signup page, fill in the form details, and submit the form**, while also capturing **snapshots before and after filling** the form for validation.
 
-[Demo youtube link](https://youtu.be/7njUaYk8HWE)
+[Demo youtube link](https://youtu.be/84MUKWFxAec)
 
 ---
 
