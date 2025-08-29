@@ -11,9 +11,15 @@ importers:
       '@openai/agents':
         specifier: ^0.0.17
         version: 0.0.17(ws@8.18.3)(zod@3.25.76)
+      chalk:
+        specifier: ^5.6.0
+        version: 5.6.0
       dotenv:
         specifier: ^17.2.1
         version: 17.2.1
+      figlet:
+        specifier: ^1.8.2
+        version: 1.8.2
       openai:
         specifier: ^5.16.0
         version: 5.16.0(ws@8.18.3)(zod@3.25.76)
@@ -81,6 +87,10 @@ packages:
   call-bound@1.0.4:
     resolution: {integrity: sha512-+ys997U96po4Kx/ABpBCqhA9EuxJaQWDQg7295H4hBphv3IZg0boBKuwYpt4YXp6MZ5AmZQnU/tyMTlRpaSejg==}
     engines: {node: '>= 0.4'}
+
+  chalk@5.6.0:
+    resolution: {integrity: sha512-46QrSQFyVSEyYAgQ22hQ+zDa60YHA4fBstHmtSApj1Y5vKtG27fWowW03jCk5KcbXEWPZUIR894aARCA/G1kfQ==}
+    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
 
   content-disposition@1.0.0:
     resolution: {integrity: sha512-Au9nRL8VNUut/XSzbQA38+M78dzP4D+eqg3gfJHMIHHYa3bg067xj1KxMUWj+VULbiZMowKngFFbKczUrNJ1mg==}
@@ -176,6 +186,11 @@ packages:
 
   fast-json-stable-stringify@2.1.0:
     resolution: {integrity: sha512-lhd/wF+Lk98HZoTCtlVraHtfh5XYijIjalXck7saUtuanSDyLMxnHhSXEDJqHxD7msR8D0uCmqlkwjCV8xvwHw==}
+
+  figlet@1.8.2:
+    resolution: {integrity: sha512-iPCpE9B/rOcjewIzDnagP9F2eySzGeHReX8WlrZQJkqFBk2wvq8gY0c6U6Hd2y9HnX1LQcYSeP7aEHoPt6sVKQ==}
+    engines: {node: '>= 0.4.0'}
+    hasBin: true
 
   finalhandler@2.1.0:
     resolution: {integrity: sha512-/t88Ty3d5JWQbWYgaOGCCYfXRwV1+be02WqYYlL6h0lEiUAMPM8o8qKGO01YIkOHzka2up08wvgYD0mDiI+q3Q==}
@@ -563,6 +578,8 @@ snapshots:
       get-intrinsic: 1.3.0
     optional: true
 
+  chalk@5.6.0: {}
+
   content-disposition@1.0.0:
     dependencies:
       safe-buffer: 5.2.1
@@ -680,6 +697,8 @@ snapshots:
 
   fast-json-stable-stringify@2.1.0:
     optional: true
+
+  figlet@1.8.2: {}
 
   finalhandler@2.1.0:
     dependencies:

@@ -2,6 +2,9 @@ import "dotenv/config";
 import { chromium } from "playwright";
 import { Agent, run, tool } from "@openai/agents";
 import { z } from "zod";
+import readline from "readline";
+import chalk from "chalk";
+import figlet from "figlet";
 
 let page;
 
@@ -12,7 +15,8 @@ const screenshotTool = tool({
   parameters: z.object({}).strict(),
   execute: async () => {
     try {
-      const buffer = await page.screenshot({ quality: 50 });
+      await page.waitForLoadState("domcontentloaded", { timeout: 5000 });
+      const buffer = await page.screenshot({ fullPage: true, quality: 50 });
       return buffer.toString("base64");
     } catch (err) {
       return `Error taking screenshot: ${err.message}`;
@@ -99,13 +103,27 @@ const browserAgent = new Agent({
   `,
 });
 
+function printHeader() {
+  console.log(chalk.green(figlet.textSync("WEB AGENT")));
+  console.log(chalk.cyan("Welcome to WebAgent CLI – AI powered web automation\n"));
+}
 
 async function main() {
-  const browser = await chromium.launch({ headless: false });
-  page = await browser.newPage();
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
 
-  const task = `
-    Go to https://ui.chaicode.com/auth/signup
+  printHeader();
+  
+  rl.question(chalk.magenta("👉 Enter a website URL (or press Enter for default): "), async (website) => {
+    const targetUrl = website.trim() || "https://ui.chaicode.com/auth/signup";
+
+    const browser = await chromium.launch({ headless: false });
+    page = await browser.newPage();
+
+    const task = `
+    Go to ${targetUrl}
     Fill the signup form with:
       First Name = Harsh
       Last Name = Shukla
@@ -114,16 +132,22 @@ async function main() {
       Confirm Password = myPassword123
     Then click Create Account.
   `;
-  try {
-    const result = await run(browserAgent, task);
-    console.log("Final output:", result.finalOutput);
-  } catch (err) {
-    console.error("Agent run failed:", err);
-    await browser.close();
-  } finally {
-    await browser.close();
-  }
+    console.log(chalk.yellow(`\n⚡ Running WebAgent with task: ${task}\n`));
 
+    try {
+      const result = await run(browserAgent, task, {
+        onStep: (step) => {
+          console.log(chalk.blue(`🔹 [Agent Step] ${step.toolCall?.name || "model"} → ${step.output}`));
+        },
+      });
+      console.log(chalk.greenBright(`\n✅ Final Output: ${result.finalOutput}\n\n`));
+    } catch (err) {
+      console.error(chalk.red("❌ Agent run failed:", err));
+    } finally {
+      await browser.close();
+      rl.close();
+    }
+  });
 }
 
 main();
